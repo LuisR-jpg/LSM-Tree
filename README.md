@@ -5,8 +5,7 @@ LSM-Tree powered database based on Designing data intensive applications book.
 ## How to run
 From root of the project, run:
 
-- dotnet run --project Database
-- dotnet run --project Database-Api
+- dotnet run
 
 
 ###### Collaborators
