@@ -9,7 +9,7 @@ public class DatabaseStressTest
     {
         var db = new Database();
         // int limit = 1_000_000_000; // Throws System-OutOfMemoryException with map implementation
-        int limit = 1_000_000; // Throws System-OutOfMemoryException with map implementation
+        int limit = 1_000_000;
 
         var start = DateTime.Now;
         Console.WriteLine($"Inserting {limit:N0} records...");
@@ -23,8 +23,6 @@ public class DatabaseStressTest
                 Console.WriteLine($"Inserted: {i:N0}");
             }
         }
-
-        Thread.Sleep(10000);
 
         var duration = DateTime.Now - start;
         Console.WriteLine($"Finished inserting {limit:N0} records in {duration.TotalSeconds:F2} seconds");

@@ -14,7 +14,6 @@ public class Database
         }
 
         _storage[key] = value;
-        // Console.WriteLine($"Inserted: [{key}] = {value}");
     }
 
     public int? Read(int key)
