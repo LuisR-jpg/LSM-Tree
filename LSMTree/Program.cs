@@ -40,7 +40,7 @@ app.MapPost("/create", (KeyValueDataTransferObject input) =>
 });
 
 // GET /read/{key}
-app.MapGet("/read/{key}", (int key) =>
+app.MapGet("/read/{key}", (long key) =>
 {
     var value = db.Read(key);
     return value.HasValue

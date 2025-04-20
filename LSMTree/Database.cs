@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 public class Database
 {
-    private readonly Dictionary<int, int> _storage = new Dictionary<int, int>();
+    private readonly Dictionary<long, long> _storage = new Dictionary<long, long>();
 
-    public void Create(int key, int value)
+    private List<Tuple<string, Dictionary<long, long>>> sparseIndex = new List<Tuple<string, Dictionary<long, long>>>();
+
+    public void Create(long key, long value)
     {
         if (_storage.ContainsKey(key))
         {
@@ -16,9 +18,9 @@ public class Database
         _storage[key] = value;
     }
 
-    public int? Read(int key)
+    public long? Read(long key)
     {
-        if (_storage.TryGetValue(key, out int value))
+        if (_storage.TryGetValue(key, out long value))
         {
             Console.WriteLine($"Read: [{key}] = {value}");
             return value;
