@@ -1,5 +1,6 @@
 public partial class Database
 {
+    // TODO: Implement
     private void compaction()
     {
         /*
@@ -7,6 +8,7 @@ public partial class Database
         */
     }
 
+    // TODO: Implement
     private void merge()
     {
         // Decide trigger

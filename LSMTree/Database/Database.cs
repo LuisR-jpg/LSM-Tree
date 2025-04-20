@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class Database
 {
-    private SortedDictionary<string, Dictionary<long, long>> sparseIndex;
+    private SortedDictionary<string, Dictionary<long, long>> sparseIndex = new SortedDictionary<string, Dictionary<long, long>>();
     private Dictionary<long, long> memTable = new Dictionary<long, long>();
 
     public Database()

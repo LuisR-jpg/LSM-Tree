@@ -1,27 +1,30 @@
 using System;
 using System.Collections.Generic;
 
-private class SSTable
+public class SSTable
 {
-  private string path;
-  public string Path
-  {
-    get { return path; }
-  }
+    private string path = string.Empty;
+    public string Path
+    {
+        get { return path; }
+    }
 
-  private string timestamp;
-  public string Timestamp
-  {
-    get { return timestamp; }
-  }
+    private string timestamp = string.Empty;
+    public string Timestamp
+    {
+        get { return timestamp; }
+    }
 
-  public Dictionary<long, long> blocksMap = new Dictionary<long, long>();
+    public Dictionary<long, long> blocksMap = new Dictionary<long, long>();
 
-  static public merge(SSTable tableA, SSTable tableB)
-  {
-  }
+    // TODO: implement
+    public long? search(long key)
+    {
+        return null;
+    }
 
-  public long? search(long key)
-  {
-  }
+    // TODO: Implement
+    public static void merge(SSTable tableA, SSTable tableB)
+    {
+    }
 }
