@@ -1,5 +1,5 @@
 public class KeyValueDataTransferObject
 {
-    public int Key { get; set; }
-    public int Value { get; set; }
+    public long Key { get; set; }
+    public long Value { get; set; }
 }
