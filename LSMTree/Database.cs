@@ -1,32 +1,32 @@
 using System;
 using System.Collections.Generic;
 
-public class Database
+public partial class Database
 {
-    private readonly Dictionary<long, long> _storage = new Dictionary<long, long>();
+    private SortedDictionary<string, Dictionary<long, long>> sparseIndex;
+    private Dictionary<long, long> memTable = new Dictionary<long, long>();
 
-    private List<Tuple<string, Dictionary<long, long>>> sparseIndex = new List<Tuple<string, Dictionary<long, long>>>();
+    public Database()
+    {
+        // lalitor: Make singleton constructor
+        /*
+            Call init and load data into sparseIndex
+        */
+    }
 
     public void Create(long key, long value)
     {
-        if (_storage.ContainsKey(key))
-        {
-            Console.WriteLine($"Key {key} already exists. Skipping insert.");
-            return;
-        }
-
-        _storage[key] = value;
+        /*
+            Insert into memtable
+            If memtable exceeds MAX_RAM, dump
+        */
     }
 
     public long? Read(long key)
     {
-        if (_storage.TryGetValue(key, out long value))
-        {
-            Console.WriteLine($"Read: [{key}] = {value}");
-            return value;
-        }
-
-        Console.WriteLine($"Key {key} not found.");
+        /*
+            Search
+        */
         return null;
     }
 }
