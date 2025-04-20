@@ -1,5 +1,6 @@
 using System;
 using Xunit;
+using System.Threading;
 
 public class DatabaseStressTest
 {
@@ -7,8 +8,8 @@ public class DatabaseStressTest
     public void AddHundredMillionRecords()
     {
         var db = new Database();
-        // int limit = 100_000_000;
-        int limit = 10;
+        // int limit = 1_000_000_000; // Throws System-OutOfMemoryException with map implementation
+        int limit = 1_000_000; // Throws System-OutOfMemoryException with map implementation
 
         var start = DateTime.Now;
         Console.WriteLine($"Inserting {limit:N0} records...");
@@ -16,15 +17,18 @@ public class DatabaseStressTest
         for (int i = 0; i < limit; i++)
         {
             db.Create(i, i);
-            if (i % 10_000_000 == 0) Console.WriteLine($"Inserted: {i:N0}");
+            int checkpoint = limit / 10;
+            if (i % checkpoint == 0)
+            {
+                Console.WriteLine($"Inserted: {i:N0}");
+            }
         }
+
+        Thread.Sleep(10000);
 
         var duration = DateTime.Now - start;
         Console.WriteLine($"Finished inserting {limit:N0} records in {duration.TotalSeconds:F2} seconds");
 
         Assert.Equal(limit - 1, db.Read(limit - 1)); // Sanity check
     }
-    // [Fact(Skip = "Stress test - uncomment to run manually")]
-    // public void AddHundredMillionRecords()
-    // }
 }
