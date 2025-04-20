@@ -1,0 +1,6 @@
+@LSM_Tree_HostAddress = http://localhost:5296
+
+GET {{LSM_Tree_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
