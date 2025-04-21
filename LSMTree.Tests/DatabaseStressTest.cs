@@ -7,9 +7,9 @@ public class DatabaseStressTest
     [Fact]
     public void AddHundredMillionRecords()
     {
-        var db = new Database();
-        // int limit = 1_000_000_000; // Throws System-OutOfMemoryException with map implementation
-        int limit = 1_000_000;
+        var db = Database.GetInstance();
+        // int limit = 1_000_000;
+        int limit = 1_000_000_000; // Throws System-OutOfMemoryException with map implementation
 
         var start = DateTime.Now;
         Console.WriteLine($"Inserting {limit:N0} records...");

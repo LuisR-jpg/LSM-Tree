@@ -23,8 +23,9 @@ public sealed partial class Database
 
     public void Create(long key, long value)
     {
+        // TODO: FIX, it doesn't allow repeated keys
         memTable.Add(key, value);
-        if (memTable.Count > Config.MAX_RAM_IN_BYTES) {
+        if (memTable.Count > Config.MEMTABLE_CAPACITY) {
             dump();
         }
     }

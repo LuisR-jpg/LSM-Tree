@@ -31,23 +31,29 @@ public class SSTable
         int index = -1;
         for(int i = 0; i < this.blocksMap.Count - 1; i++)
         {
-            if (key < blocksMap.ElementAt(i + 1).Value)
+            if (key < blocksMap.ElementAt(i + 1).Key)
             {
                 index = i;
                 break;
             }
         }
 
+        long upper;
         if (index != -1)
         {
-            return FileOperations.rangeSearch(
-                key,
-                this.Path,
-                blocksMap.ElementAt(index).Value,
-                blocksMap.ElementAt(index + 1).Value
-            );
+            upper = blocksMap.ElementAt(index + 1).Key;
         }
-        return null;
+        else
+        {
+            upper = 1000000; // TODO: FIX
+            index = this.blocksMap.Count - 1;
+        }
+        return FileOperations.rangeSearch(
+            key,
+            this.Path,
+            blocksMap.ElementAt(index).Key,
+            upper
+        );
     }
 
     // TODO: Implement

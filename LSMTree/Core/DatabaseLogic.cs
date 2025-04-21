@@ -24,6 +24,7 @@ public partial class Database
         memTable.Clear();
     }
 
+    // TODO: FIRST KEY COULDN'T BE READ
     private long? search(long key)
     {
         long value;

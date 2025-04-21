@@ -7,6 +7,10 @@ public record DataUnit(long Key, long Data) : IComparable<DataUnit>
 {
     public int CompareTo(DataUnit? other)
     {
+        if (other == null) 
+        {
+            return 1;
+        }
         return Key.CompareTo(other.Key);
     }
 }

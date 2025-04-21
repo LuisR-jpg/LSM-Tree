@@ -28,7 +28,7 @@ public static class KeyCompressor
         try
         {
             // Crear el directorio si no existe.
-            string directory = Path.GetDirectoryName(filePathWithTime);
+            string? directory = Path.GetDirectoryName(filePathWithTime);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
