@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class Database
 {
-    private SortedDictionary<string, Dictionary<long, long>> sparseIndex = new SortedDictionary<string, Dictionary<long, long>>();
+    private SortedDictionary<string, SSTable> sparseIndex = new SortedDictionary<string, SSTable>();
     private Dictionary<long, long> memTable = new Dictionary<long, long>();
 
     public Database()
@@ -16,10 +16,10 @@ public partial class Database
 
     public void Create(long key, long value)
     {
-        /*
-            Insert into memtable
-            If memtable exceeds MAX_RAM, dump
-        */
+        memTable.Add(key, value);
+        if (memTable.Count > Config.MAX_RAM_IN_BYTES) {
+            dump();
+        }
     }
 
     public long? Read(long key)

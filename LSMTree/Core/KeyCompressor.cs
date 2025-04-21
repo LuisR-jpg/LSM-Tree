@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-public class KeyCompressor
+public static class KeyCompressor
 {
-    private const int COMPRESSED_SIZE = 40960; // 4 KB
-
     /// <summary>
     /// Comprime la lista de objectos DataUnit
     /// Escribe la lista de objetos comprimidas a un SSTable
@@ -19,8 +17,8 @@ public class KeyCompressor
     /// <param name="compressedKeys"> La lista de objetos comprimida.</param>
     /// <param name="SSTablePath"> El path al SSTable escrito.</param>
     /// <param name="CheckpointPath"> El path al Checkpoint escrito.</param>
-    public void CompressDataAndSave(
-            List<DataUnit> data, string baseFilePath, MapWriter mapWriter,
+    public static void CompressDataAndSave(
+            List<DataUnit> data, string baseFilePath,
             out SortedSet<KeyOffset> compressedKeys, out string sstPath,
             out string checkpointPath) {
 
@@ -55,7 +53,7 @@ public class KeyCompressor
                         compressedKeys.Add(compressedKey);
                     }
                     segmentSize += GetByteCount(dataEncoded);
-                    if (segmentSize > COMPRESSED_SIZE) {
+                    if (segmentSize > Config.COMPRESSED_SIZE) {
                         segmentSize = 0;
                     }
                     bytesWritten += GetByteCount(dataEncoded);
@@ -70,23 +68,23 @@ public class KeyCompressor
 
         // Write Checkpoint
         checkpointPath = GetMapFileName(filePathWithTime);
-        mapWriter.WriteMapFile(compressedKeys, checkpointPath);
+        MapWriter.WriteMapFile(compressedKeys, checkpointPath);
     }
 
-    private string MakePathWithTimestamp(string baseFilePath) {
+    private static string MakePathWithTimestamp(string baseFilePath) {
         DateTimeOffset nowOffset = DateTimeOffset.Now; // Gets the current local time with its offset
         long unixTimeSeconds = nowOffset.ToUnixTimeSeconds();
         return $"{baseFilePath}{unixTimeSeconds}";
     }
 
-    private string GetLogFileName(string filePathWithTime) {
+    private static string GetLogFileName(string filePathWithTime) {
         return $"{filePathWithTime}.log";
     }
 
-    private string GetMapFileName(string filePathWithTime) {
+    private static string GetMapFileName(string filePathWithTime) {
         return $"{filePathWithTime}.map";
     }
-    private long GetByteCount(string inputString) {
+    private static long GetByteCount(string inputString) {
         return Encoding.UTF8.GetByteCount(inputString);
     }
 }
