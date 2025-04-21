@@ -1,7 +1,7 @@
 public partial class Database
 {
     // TODO: Implement
-    private void compaction()
+    async private void compaction()
     {
         /*
             Uses merge

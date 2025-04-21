@@ -23,7 +23,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // --- Database setup ---
-var db = new Database();
+Database db = Database.GetInstance();
 
 // --- Minimal API endpoints ---
 // Health check

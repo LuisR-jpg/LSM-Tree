@@ -1,32 +1,44 @@
 using System;
 using System.Collections.Generic;
 
-public partial class Database
+public sealed partial class Database
 {
-    private SortedDictionary<string, Dictionary<long, long>> sparseIndex = new SortedDictionary<string, Dictionary<long, long>>();
+    private SortedDictionary<string, SSTable> ssTables = new SortedDictionary<string, SSTable>();
     private Dictionary<long, long> memTable = new Dictionary<long, long>();
 
-    public Database()
+    private static Database? _database;
+    private Database()
     {
-        // lalitor: Make singleton constructor
-        /*
-            Call init and load data into sparseIndex
-        */
+        // TODO Call init and load data into sparseIndex
+    }
+
+    public static Database GetInstance()
+    {
+        if (_database == null)
+        {
+            _database = new Database();
+        }
+        return _database;
     }
 
     public void Create(long key, long value)
     {
         /*
-            Insert into memtable
-            If memtable exceeds MAX_RAM, dump
+            TODO Insert into memtable
+            TODO If memtable exceeds MAX_RAM, dump
         */
     }
 
     public long? Read(long key)
     {
-        /*
-            Search
-        */
-        return null;
+        try
+        {
+            return this.search(key);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Could not read key {key}! Exception: {e}");
+            return null;
+        }
     }
 }
