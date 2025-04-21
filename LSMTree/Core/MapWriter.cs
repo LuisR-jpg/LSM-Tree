@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public class MapWriter
+public static class MapWriter
 {
     /// <summary>
     /// Recibe un conjunto ordenado de KeyOffsets y una ruta de archivo base,
@@ -13,7 +13,7 @@ public class MapWriter
     /// <param name="filePath">La ruta de archivo base.</param>
     /// <exception cref="ArgumentNullException">Se lanza si keyOffsets o baseFilePath es null.</exception>
     /// <exception cref="IOException">Se lanza si hay un error al escribir el archivo.</exception>
-    public void WriteMapFile(SortedSet<KeyOffset> keyOffsets, string filePath)
+    public static void WriteMapFile(SortedSet<KeyOffset> keyOffsets, string filePath)
     {
         // Validación de argumentos
         if (keyOffsets == null)
