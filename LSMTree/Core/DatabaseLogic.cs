@@ -20,13 +20,28 @@ public partial class Database
         KeyCompressor.CompressDataAndSave(list, Config.LOG_FILE_PATH,
                 out compressedKeys, out sstPath, out checkpointPath);
         SSTable newTable = new SSTable(sstPath, compressedKeys);
-        sparseIndex.Add(sstPath, newTable);
+        ssTables.Add(sstPath, newTable);
         memTable.Clear();
     }
 
-    // TODO: Implement
-    private KeyValueDataTransferObject search(long key)
+    // TODO: FIRST KEY COULDN'T BE READ
+    private long? search(long key)
     {
-        return new KeyValueDataTransferObject();
+        long value;
+        if (this.memTable.TryGetValue(key, out value))
+        {
+            return value;
+        }
+
+        foreach(KeyValuePair<string, SSTable> refTable in this.ssTables)
+        {
+            long? response = refTable.Value.search(key);
+            if (response != null)
+            {
+                // Does not return immediately because there might be a newer value
+                value = (long)response;
+            }
+        }
+        return value;
     }
 }

@@ -23,12 +23,37 @@ public class SSTable
         get { return timestamp; }
     }
 
-    public Dictionary<long, long> blocksMap = new Dictionary<long, long>();
+    // Stores pairs of <offset, key>
+    public SortedDictionary<long, long> blocksMap = new SortedDictionary<long, long>();
 
-    // TODO: implement
     public long? search(long key)
     {
-        return null;
+        int index = -1;
+        for(int i = 0; i < this.blocksMap.Count - 1; i++)
+        {
+            if (key < blocksMap.ElementAt(i + 1).Key)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        long upper;
+        if (index != -1)
+        {
+            upper = blocksMap.ElementAt(index + 1).Key;
+        }
+        else
+        {
+            upper = 1000000; // TODO: FIX
+            index = this.blocksMap.Count - 1;
+        }
+        return FileOperations.rangeSearch(
+            key,
+            this.Path,
+            blocksMap.ElementAt(index).Key,
+            upper
+        );
     }
 
     // TODO: Implement

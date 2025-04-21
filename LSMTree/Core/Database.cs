@@ -1,32 +1,45 @@
 using System;
 using System.Collections.Generic;
 
-public partial class Database
+public sealed partial class Database
 {
-    private SortedDictionary<string, SSTable> sparseIndex = new SortedDictionary<string, SSTable>();
+    private SortedDictionary<string, SSTable> ssTables = new SortedDictionary<string, SSTable>();
     private Dictionary<long, long> memTable = new Dictionary<long, long>();
 
-    public Database()
+    private static Database? _database;
+    private Database()
     {
-        // lalitor: Make singleton constructor
-        /*
-            Call init and load data into sparseIndex
-        */
+        // TODO Call init and load data into ssTables
+    }
+
+    public static Database GetInstance()
+    {
+        if (_database == null)
+        {
+            _database = new Database();
+        }
+        return _database;
     }
 
     public void Create(long key, long value)
     {
+        // TODO: FIX, it doesn't allow repeated keys
         memTable.Add(key, value);
-        if (memTable.Count > Config.MAX_RAM_IN_BYTES) {
+        if (memTable.Count > Config.MEMTABLE_CAPACITY) {
             dump();
         }
     }
 
     public long? Read(long key)
     {
-        /*
-            Search
-        */
-        return null;
+        try
+        {
+            return this.search(key);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Could not read key {key}! Exception: {e}");
+            return null;
+        }
     }
 }

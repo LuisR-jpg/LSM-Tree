@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+// TODO: Agregar la última key para tener el offset final
+// TODO: Escritura es tan rápida que intenta repetir timestamp
+
 public static class MapWriter
 {
     /// <summary>
@@ -28,7 +31,7 @@ public static class MapWriter
         try
         {
             // Crear el directorio si no existe.
-            string directory = Path.GetDirectoryName(filePath);
+            string? directory = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);

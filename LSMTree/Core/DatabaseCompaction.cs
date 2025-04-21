@@ -1,6 +1,6 @@
 public partial class Database
 {
-    // TODO: Implement
+    // TODO: Implement - make async
     private void compaction()
     {
         /*
