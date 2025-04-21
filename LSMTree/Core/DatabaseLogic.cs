@@ -6,9 +6,22 @@ public partial class Database
         return new SortedDictionary<string, Dictionary<long, long>>();
     }
     
-    // TODO: Implement
     private void dump()
     {
+        List<DataUnit> list = new List<DataUnit>();
+        foreach (var pair in memTable.OrderBy(p => p.Key))
+        {
+            DataUnit p = new DataUnit(pair.Key, pair.Value);
+            list.Add(p);
+        }
+        SortedSet<KeyOffset> compressedKeys;
+        string sstPath;
+        string checkpointPath;
+        KeyCompressor.CompressDataAndSave(list, Config.LOG_FILE_PATH,
+                out compressedKeys, out sstPath, out checkpointPath);
+        SSTable newTable = new SSTable(sstPath, compressedKeys);
+        ssTables.Add(sstPath, newTable);
+        memTable.Clear();
     }
 
     private long? search(long key)

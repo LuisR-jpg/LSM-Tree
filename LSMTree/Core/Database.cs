@@ -9,7 +9,7 @@ public sealed partial class Database
     private static Database? _database;
     private Database()
     {
-        // TODO Call init and load data into sparseIndex
+        // TODO Call init and load data into ssTables
     }
 
     public static Database GetInstance()
@@ -23,10 +23,10 @@ public sealed partial class Database
 
     public void Create(long key, long value)
     {
-        /*
-            TODO Insert into memtable
-            TODO If memtable exceeds MAX_RAM, dump
-        */
+        memTable.Add(key, value);
+        if (memTable.Count > Config.MAX_RAM_IN_BYTES) {
+            dump();
+        }
     }
 
     public long? Read(long key)
