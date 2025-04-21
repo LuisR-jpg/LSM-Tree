@@ -4,7 +4,8 @@ using System.IO;
 
 public class FileWriterTest
 {
-    public static void Main(string[] args)
+    [Fact]
+    public void MapFormatTest()
     {
         // Crear un conjunto ordenado de KeyOffsets para probar.
         SortedSet<KeyOffset> keyOffsets = new SortedSet<KeyOffset>
@@ -20,17 +21,6 @@ public class FileWriterTest
 
         // Especificar una ruta de archivo base para la prueba.
         string baseFilePath = "map_test";
-        bool keepFile = false; // Valor por defecto
-
-        // Procesar argumentos de línea de comandos
-        foreach (string arg in args)
-        {
-            if (arg.ToLower() == "-keepfile")
-            {
-                keepFile = true;
-                Console.WriteLine("Argumento -keepfile encontrado. El archivo no se eliminará.");
-            }
-        }
 
         try
         {
@@ -57,14 +47,10 @@ public class FileWriterTest
                 Console.WriteLine($"El archivo {filePath} no existe.");
             }
 
-            if (!keepFile && File.Exists(filePath))
+            if (File.Exists(filePath))
             {
                 File.Delete(filePath);
                 Console.WriteLine($"Archivo {filePath} eliminado.");
-            }
-            else if (keepFile)
-            {
-                Console.WriteLine($"Archivo {filePath} no eliminado debido al flag keepFile.");
             }
         }
         catch (IOException ex)
