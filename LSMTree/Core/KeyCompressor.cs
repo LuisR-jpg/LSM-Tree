@@ -75,7 +75,7 @@ public class KeyCompressor
 
     private string MakePathWithTimestamp(string baseFilePath) {
         DateTimeOffset nowOffset = DateTimeOffset.Now; // Gets the current local time with its offset
-        long unixTimeSeconds = nowOffset.ToUnixTimeSeconds()
+        long unixTimeSeconds = nowOffset.ToUnixTimeSeconds();
         return $"{baseFilePath}{unixTimeSeconds}";
     }
 
